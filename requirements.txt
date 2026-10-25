@@ -1,0 +1,2 @@
+arxiv==4.0.1
+huggingface_hub==2.3.0

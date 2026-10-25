@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "mode": "automatic_discovery",
+  "timezone": "Africa/Cairo",
+  "last_checked_at": "2026-10-25T12:14:47Z",
+  "feeds": {
+    "arxiv-speech": {
+      "cursor": "2026-10-25T12:14:47Z",
+      "pending_since": null,
+      "last_checked_at": "2026-10-25T12:14:47Z",
+      "last_status": "ok",
+      "last_received_count": 0
+    },
+    "hf-asr": {
+      "cursor": "2026-10-25T12:14:47Z",
+      "pending_since": null,
+      "last_checked_at": "2026-10-25T12:14:47Z",
+      "last_status": "ok",
+      "last_received_count": 632
+    },
+    "hf-tts": {
+      "cursor": "2026-10-25T12:14:47Z",
+      "pending_since": null,
+      "last_checked_at": "2026-10-25T12:14:47Z",
+      "last_status": "ok",
+      "last_received_count": 515
+    }
+  }
+}

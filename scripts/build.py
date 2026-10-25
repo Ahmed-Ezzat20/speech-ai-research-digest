@@ -79,19 +79,19 @@ def render_baseline(data: dict) -> str:
     experiments = data.get("experiments", [])
     themes = brief.get("themes", [])
     out = [
-        '<header><p class="meta">SOURCE-BACKED / AFRICA-CAIRO / STATIC EDITION</p>',
+        '<header><p class="meta">PUBLIC-METADATA / AUTOMATIC DISCOVERY / AFRICA-CAIRO</p>',
         f'<h1>{esc(site["title"])}</h1><p>{esc(site["description"])}</p>',
         f'<p><a href="archive.html">Archive</a> · <a href="feed.xml">Atom feed</a> · <a href="{esc(site["repo_url"])}">Source repository</a></p></header>',
         '<main>',
         f'<section><p class="meta">7-DAY BRIEF · {esc(brief.get("period_start"))} → {esc(brief.get("period_end"))}</p><h2>{esc(brief.get("headline"))}</h2><p>{esc(brief.get("summary"))}</p>',
-        '<div>' + ''.join(f'<article><span class="tag">{esc(t.get("title"))}</span><p>{esc(t.get("body"))}</p><p><strong>So what:</strong> {esc(t.get("so_what"))}</p></article>' for t in themes) + '</div>',
+        '<div>' + ''.join(f'<article><span class="tag">{esc(t.get("title"))}</span><p>{esc(t.get("body"))}</p><p><strong>So what:</strong> {esc(t.get("so_what"))}</p>' + ''.join(f'<a href="{esc(url)}">Primary source</a> ' for url in t.get('source_urls', [])) + '</article>' for t in themes) + '</div>',
         '<h3>Watch next</h3><ul>' + ''.join(f'<li>{esc(w.get("text"))}' + (f' <a href="{esc(w["source_url"])}">source</a>' if w.get("source_url") else '') + '</li>' for w in brief.get("watch_next", [])) + '</ul></section>',
         '<section><h2>Action board</h2><p class="meta">Persistent evidence-backed checks; evergreen items are not new alerts.</p><ul>' + ''.join(f'<li><strong>{esc(a.get("title"))}</strong> <span class="tag">{esc(a.get("category"))}</span><br>{esc(a.get("affects"))}<br><strong>Do:</strong> {esc(a.get("do"))} · <a href="{esc(a.get("source_url"))}">source</a></li>' for a in actions if not a.get("dismissed")) + '</ul></section>',
-        '<section><h2>Historical milestones</h2><p class="meta">Curated dossier milestones; not source-reviewed weekly changes.</p><ol>' + ''.join(f'<li><time datetime="{esc(e["timestamp"])}">{esc(e["timestamp"][:10])}</time> · <strong>{esc(e["title"])}</strong> <span class="tag">{esc(e["category"])}</span><br>{esc(e["summary"])} · <a href="{esc(e["source_url"])}">source</a></li>' for e in events) + '</ol></section>',
+        '<section><h2>Discovered evidence</h2><p class="meta">Immutable source metadata records; not independently reproduced quality or release claims.</p><ol>' + ''.join(f'<li><time datetime="{esc(e["timestamp"])}">{esc(e["timestamp"][:10])}</time> · <strong>{esc(e["title"])}</strong> <span class="tag">{esc(e["category"])}</span><br>{esc(e["summary"])} · <a href="{esc(e["source_url"])}">source</a></li>' for e in events) + ('<li>No source metadata is in the current seven-day ledger.</li>' if not events else '') + '</ol></section>',
         '<section><h2>Source-reviewed checks</h2>' + ''.join(f'<article><h3><a href="{esc(r.get("url"))}">{esc(r.get("headline"))}</a></h3><p class="meta">{esc(r.get("checked_at"))} · {esc(r.get("status"))}</p><p>{esc("; ".join(failure_text(item) for item in r.get("failures", [])) if r.get("failures") else "No failures recorded.")}</p></article>' for r in runs) + '</section>',
         '<section><h2>Research profiles</h2>' + ''.join(f'<details><summary><strong>{esc(p["name"])}</strong> · {esc(p["category"])} — {esc(p["headline"])}</summary><p>{esc(p["summary"])}</p><p><strong>Build takeaway:</strong> {esc(p["buildTakeaway"])}</p><p><strong>Caveat:</strong> {esc(p["caveat"])}</p></details>' for p in profiles) + '</section>',
         '<section><h2>Experiments</h2>' + ''.join(f'<details><summary><strong>{esc(x["title"])}</strong> · {esc(x["subtitle"])}</summary><p>{esc(x["hypothesis"])}</p><p><strong>Metrics:</strong> {esc(x["metrics"])}</p><ol>' + ''.join(f'<li>{esc(step)}</li>' for step in x["steps"]) + f'</ol><p><strong>Deliverable:</strong> {esc(x["deliverable"])}</p></details>' for x in experiments) + '</section>',
-        '</main><footer><p class="meta">Generated from normalized DATA schema v1. Schedule enabled: ' + esc(site.get("schedule", {}).get("enabled")) + '.</p></footer>'
+        '</main><footer><p class="meta">Generated from normalized DATA schema v2. Automatic discovery mode: ' + esc(site.get("mode", "unknown")) + '. Schedule activation remains owner-controlled.</p></footer>'
     ]
     return "".join(out)
 
@@ -109,15 +109,18 @@ def render_run_page(data: dict, run: dict) -> str:
 
 
 def render_brief_page(brief: dict) -> str:
-    body = f'<p><a href="../index.html">Home</a> · <a href="../archive.html">Archive</a></p><h1>{esc(brief.get("headline"))}</h1><p class="meta">{esc(brief.get("period_start"))} → {esc(brief.get("period_end"))}</p><p>{esc(brief.get("summary"))}</p>' + ''.join(f'<article><h2>{esc(t.get("title"))}</h2><p>{esc(t.get("body"))}</p><p><strong>So what:</strong> {esc(t.get("so_what"))}</p></article>' for t in brief.get('themes', []))
+    body = f'<p><a href="../index.html">Home</a> · <a href="../archive.html">Archive</a></p><h1>{esc(brief.get("headline"))}</h1><p class="meta">{esc(brief.get("period_start"))} → {esc(brief.get("period_end"))}</p><p>{esc(brief.get("summary"))}</p>' + ''.join(f'<article><h2>{esc(t.get("title"))}</h2><p>{esc(t.get("body"))}</p><p><strong>So what:</strong> {esc(t.get("so_what"))}</p>' + ''.join(f'<a href="{esc(url)}">Primary source</a> ' for url in t.get('source_urls', [])) + '</article>' for t in brief.get('themes', []))
     return standalone(f'Weekly snapshot · {brief.get("id")}', body, brief)
 
 
 def render_archive(data: dict) -> str:
     runs = sorted(data.get("runs", []), key=lambda x: parse_dt(x["checked_at"]), reverse=True)
     snaps = sorted(data.get("snapshots", []), key=lambda x: parse_dt(x["generated_at"]), reverse=True)
-    body = '<p><a href="index.html">Home</a> · <a href="feed.xml">Atom feed</a></p><h1>Archive</h1><h2>Checks</h2><ul>' + ''.join(f'<li><a href="{esc(r["url"])}">{esc(r["checked_at"])} · {esc(r["headline"])}</a> <span class="tag">{esc(r["status"])}</span></li>' for r in runs) + '</ul><h2>Weekly snapshots</h2><ul>' + ''.join(f'<li><a href="{esc(s["url"])}">{esc(s.get("period_start"))} → {esc(s.get("period_end"))}</a> · {esc(s.get("headline"))}</li>' for s in snaps) + '</ul>'
-    return standalone('Archive · Speech AI Research Digest', body, {'runs':runs,'snapshots':snaps})
+    legacy = data.get('legacy_archive', {})
+    legacy_runs = legacy.get('historical_runs', [])
+    legacy_snaps = legacy.get('historical_snapshots', [])
+    body = '<p><a href="index.html">Home</a> · <a href="feed.xml">Atom feed</a></p><h1>Archive</h1><h2>Checks</h2><ul>' + ''.join(f'<li><a href="{esc(r["url"])}">{esc(r["checked_at"])} · {esc(r["headline"])}</a> <span class="tag">{esc(r["status"])}</span></li>' for r in runs) + '</ul><h2>Weekly snapshots</h2><ul>' + ''.join(f'<li><a href="{esc(s["url"])}">{esc(s.get("period_start"))} → {esc(s.get("period_end"))}</a> · {esc(s.get("headline"))}</li>' for s in snaps) + '</ul><h2>Historical legacy archive</h2><p class="meta">Preserved before automatic discovery; not active evidence.</p><ul>' + ''.join(f'<li><a href="{esc(r["url"])}">{esc(r.get("checked_at"))} · {esc(r.get("headline"))}</a> <span class="tag">legacy</span></li>' for r in legacy_runs) + ''.join(f'<li><a href="{esc(s["url"])}">{esc(s.get("period_start"))} → {esc(s.get("period_end"))}</a> · {esc(s.get("headline"))} <span class="tag">legacy</span></li>' for s in legacy_snaps) + '</ul>'
+    return standalone('Archive · Speech AI Research Digest', body, {'runs':runs,'snapshots':snaps,'legacy_runs':legacy_runs,'legacy_snapshots':legacy_snaps})
 
 
 def feed(data: dict) -> str:
@@ -153,8 +156,15 @@ def load_template() -> tuple[str, str, str]:
 def build() -> None:
     data = read_data()
     template, css, js = load_template()
-    ssr = render_baseline(data)
-    replacements = {'__CSS__':css, '__JS__':js, '__DATA__':safe_json(data), '__SSR__':ssr}
+    # Raw API receipts remain in public data.json, not duplicated in browser HTML.
+    # Keep all chart/event/profile citations but omit unused large metadata blobs.
+    browser_data = dict(data)
+    for key in ('discovery_items', 'profile_items'):
+        browser_data.pop(key, None)
+    browser_data['events'] = [{key:value for key,value in event.items() if key != 'metadata'} for event in data.get('events', [])]
+    browser_data['experiments'] = data.get('experiments', [])[:3]
+    ssr = render_baseline(browser_data)
+    replacements = {'__CSS__':css, '__JS__':js, '__DATA__':safe_json(browser_data), '__SSR__':ssr}
     for token in TOKEN_NAMES:
         if token not in template:
             raise ValueError(f'frontend template missing required token {token}')
@@ -176,7 +186,20 @@ def build() -> None:
         config = json.loads(sources_path.read_text(encoding='utf-8'))
         actual_runs = [run for run in data.get('runs',[]) if run.get('status') != 'setup']
         latest = max(actual_runs, key=lambda run: parse_dt(run['checked_at']), default=None)
-        state = {'timezone':data['site']['timezone'], 'schedule':data['site'].get('schedule',{}), 'last_run':latest['checked_at'] if latest else None, 'last_entry_file':latest['url'] if latest else None, 'last_snapshot':max((item['generated_at'] for item in data.get('snapshots',[])),default=None), 'sources':{source['id']:{key:source.get(key) for key in ('cursor','last_checked_at','last_status','last_run')} for source in config.get('sources',[])}}
+        feeds = config.get('discovery', {}).get('feeds', [])
+        saved = {}
+        discovery_path = ROOT / 'task' / 'discovery_state.json'
+        if discovery_path.exists():
+            saved = json.loads(discovery_path.read_text(encoding='utf-8')).get('feeds', {})
+        discovery = {}
+        for feed_config in feeds:
+            item = {key: feed_config[key] for key in ('kind', 'category') if key in feed_config}
+            for key in ('query', 'pipeline_tag'):
+                if key in feed_config:
+                    item[key] = feed_config[key]
+            item.update({key: saved.get(feed_config['id'], {}).get(key) for key in ('cursor', 'pending_since', 'last_checked_at', 'last_status')})
+            discovery[feed_config['id']] = item
+        state = {'schema_version': 2, 'mode': data['site'].get('mode', 'automatic_discovery'), 'timezone':data['site']['timezone'], 'schedule':data['site'].get('schedule',{}), 'last_run':latest['checked_at'] if latest else None, 'last_entry_file':latest['url'] if latest else None, 'last_snapshot':max((item['generated_at'] for item in data.get('snapshots',[])),default=None), 'discovery': discovery}
         (ROOT / 'task' / 'state.json').write_text(json.dumps(state,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
 

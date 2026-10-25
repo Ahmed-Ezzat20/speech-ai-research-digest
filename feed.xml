@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 <title>Speech AI Research Digest</title>
-<subtitle>Source-backed speech research for building original Arabic models and datasets.</subtitle>
+<subtitle>Automatically discovered public metadata for speech research; verify every primary source.</subtitle>
 <id>https://ahmed-ezzat20.github.io/speech-ai-research-digest/</id>
 <link href="https://ahmed-ezzat20.github.io/speech-ai-research-digest/" rel="alternate"/>
 <link href="https://ahmed-ezzat20.github.io/speech-ai-research-digest/feed.xml" rel="self"/>
-<updated>2026-10-25T11:14:46Z</updated>
+<updated>2026-10-25T12:14:47Z</updated>
 <author><name>Speech AI Research Digest</name></author>
 <entry>
-<id>https://ahmed-ezzat20.github.io/speech-ai-research-digest/briefs/brief-setup-import-20261025T111446Z.html</id>
+<id>https://ahmed-ezzat20.github.io/speech-ai-research-digest/digests/harvest-20261025T121447Z.html</id>
+<title>515 public metadata record(s) discovered.</title>
+<updated>2026-10-25T12:14:47Z</updated>
+<link href="https://ahmed-ezzat20.github.io/speech-ai-research-digest/digests/harvest-20261025T121447Z.html"/>
+<summary>515 public metadata record(s) discovered.</summary>
+</entry>
+<entry>
+<id>https://ahmed-ezzat20.github.io/speech-ai-research-digest/digests/harvest-20261025T120915Z.html</id>
+<title>Partial automatic discovery coverage.</title>
+<updated>2026-10-25T12:09:15Z</updated>
+<link href="https://ahmed-ezzat20.github.io/speech-ai-research-digest/digests/harvest-20261025T120915Z.html"/>
+<summary>Partial automatic discovery coverage.</summary>
+</entry>
+<entry>
+<id>https://ahmed-ezzat20.github.io/speech-ai-research-digest/briefs/brief-20261025T120915Z.html</id>
 <title>Weekly snapshot · 2026-10-18T21:00:00Z → 2026-10-25T21:00:00Z</title>
-<updated>2026-10-25T11:14:46Z</updated>
-<link href="https://ahmed-ezzat20.github.io/speech-ai-research-digest/briefs/brief-setup-import-20261025T111446Z.html"/>
-<summary>This is the honest orientation baseline imported from the verified research dossiers. No source-reviewed weekly changes have been recorded yet; the historical milestones below are curated context, not this week’s monitoring results.</summary>
+<updated>2026-10-25T12:09:15Z</updated>
+<link href="https://ahmed-ezzat20.github.io/speech-ai-research-digest/briefs/brief-20261025T120915Z.html"/>
+<summary>Coverage is partial: 2 of 3 configured feed(s) failed or were truncated. Published records are limited to returned public metadata; no complete no-news claim is made.</summary>
 </entry>
 </feed>

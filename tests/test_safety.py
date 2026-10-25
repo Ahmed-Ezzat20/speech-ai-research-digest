@@ -6,85 +6,63 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'scripts'))
-import build
-import update
+sys.path.insert(0, str(ROOT / "scripts"))
+import build  # noqa: E402
+import harvest  # noqa: E402
+import test_pipeline  # noqa: E402
 
 
-class SafetyTests(unittest.TestCase):
-    def setUp(self):
-        self.data = update.load(update.DATA_PATH)
-        self.sources = update.load(update.SOURCES_PATH)
-        now = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00','Z')
-        ids = [source['id'] for source in self.sources['sources']]
-        self.payload = {'run': {'id':'safety-check','checked_at':now,'status':'quiet','headline':'Test only','event_ids':[], 'sources_checked':ids,'failures':[], 'url':'digests/safety-check.html'}, 'events':[],'actions':[],'brief':{}, 'source_state':{source['id']:{'status':'checked','cursor':source.get('cursor')} for source in self.sources['sources']}}
-
-    def event(self):
-        event = copy.deepcopy(self.data['events'][0])
-        event['id'] = 'test-new-reviewed-event'
-        event['timestamp'] = self.payload['run']['checked_at']
-        event['provenance'] = 'reviewed'
-        return event
-
-    def test_complete_quiet_validation_does_not_mutate_files(self):
-        before = update.DATA_PATH.read_bytes()
-        result = update.ingest(self.payload, validate_only=True)
-        self.assertEqual(result['data']['site']['generated_at'], self.payload['run']['checked_at'])
-        self.assertEqual(before, update.DATA_PATH.read_bytes())
-
-    def test_quiet_requires_state_for_every_checked_source(self):
-        self.payload['source_state'].pop('whisper')
-        with self.assertRaises(update.UpdateError): update.ingest(self.payload, validate_only=True)
-
-    def test_quiet_cannot_hide_unlinked_new_events(self):
-        self.payload['events'] = [self.event()]
-        with self.assertRaises(update.UpdateError): update.ingest(self.payload, validate_only=True)
-
-    def test_updated_must_cover_all_sources(self):
-        event = self.event()
-        self.payload['run'].update(status='updated',sources_checked=[event['project_id']],event_ids=[event['id']])
-        self.payload['events'] = [event]
-        with self.assertRaises(update.UpdateError): update.ingest(self.payload, validate_only=True)
-
-    def test_exact_replay_preserves_the_whole_dataset(self):
-        self.payload['run'] = copy.deepcopy(self.data['runs'][0])
-        self.payload['source_state'] = {}
-        self.payload['brief'] = {'headline':'This must not replace the current brief'}
-        result = update.ingest(self.payload, validate_only=True)
-        self.assertTrue(result['replay'])
-        self.assertEqual(result['data'], self.data)
-
-    def test_wrong_same_host_project_citation_is_rejected(self):
-        self.assertFalse(update.registered_source('https://github.com/openai/not-whisper','whisper',self.data))
-        self.assertFalse(update.registered_source('https://github.com/openai/whisper/../not-whisper','whisper',self.data))
-        self.assertTrue(update.registered_source('https://github.com/openai/whisper/releases/tag/v20250625','whisper',self.data))
-
-    def test_nested_action_schema_is_required(self):
-        event = self.event(); event['action'] = {'unexpected':1}
-        with self.assertRaises(update.UpdateError): update.validate_event(event,self.data,update.iso_dt(self.payload['run']['checked_at'],'test'))
-
-    def test_setup_cannot_advance_source_cursors(self):
-        self.payload['run']['status'] = 'setup'
-        with self.assertRaises(update.UpdateError): update.ingest(self.payload, validate_only=True)
+class PublisherSafetyTests(unittest.TestCase):
+    def fixture(self):
+        helper = test_pipeline.PublisherPipelineTests("test_publish_derives_events_profiles_and_state")
+        root = helper.fixture_root()
+        self.addCleanup(helper.doCleanups)
+        return root, helper
 
     def test_json_script_data_escapes_all_html_openings(self):
-        payload = {'sample':'</SCRIPT><script>bad</script><!--'}
+        payload = {"sample": "</SCRIPT><script>bad</script><!--"}
         encoded = build.safe_json(payload)
-        self.assertNotIn('<', encoded)
+        self.assertNotIn("<", encoded)
         self.assertEqual(json.loads(encoded), payload)
 
-    def test_partial_failure_objects_remain_readable(self):
-        self.payload['run']['status'] = 'partial'
-        self.payload['run']['failures'] = [{'source_id':'whisper','message':'Network unavailable; not checked'}]
-        self.payload['source_state']['whisper']['status'] = 'failed'
-        result = update.ingest(self.payload, validate_only=True)
-        self.assertIn('Network unavailable', build.render_baseline(result['data']))
-        self.assertIn('whisper: Network unavailable', build.render_run_page(result['data'], self.payload['run']))
+    def test_conflicting_immutable_identity_is_rejected(self):
+        root, helper = self.fixture()
+        batch = helper.batch()
+        conflicting = copy.deepcopy(batch)
+        conflicting["items"][0]["id"] = "paper-other"
+        conflicting["items"][0]["summary"] = "different immutable payload"
+        batch["items"].append(conflicting["items"][0])
+        with self.assertRaises(harvest.HarvestError):
+            harvest.publish_batch(batch, root=root, validate_only=True)
 
-    def test_updated_run_without_new_events_is_rejected(self):
-        self.payload['run']['status'] = 'updated'
-        with self.assertRaises(update.UpdateError): update.ingest(self.payload, validate_only=True)
+    def test_future_item_timestamp_is_rejected(self):
+        root, helper = self.fixture()
+        batch = helper.batch()
+        batch["items"][0]["timestamp"] = "2026-10-25T12:00:01Z"
+        with self.assertRaises(harvest.HarvestError):
+            harvest.publish_batch(batch, root=root, validate_only=True)
+
+    def test_partial_failure_is_visible_in_baseline_and_run_page(self):
+        root, helper = self.fixture()
+        result = harvest.publish_batch(helper.batch(partial=True), root=root, validate_only=True)
+        rendered = build.render_baseline(result["data"])
+        self.assertIn("Partial automatic discovery coverage", rendered)
+        self.assertIn("hf-asr", rendered)
+        self.assertEqual(result["run"]["status"], "partial")
+
+    def test_active_data_contains_no_seeded_legacy_records(self):
+        data = json.loads((ROOT / "data/data.json").read_text())
+        self.assertEqual(data["site"]["mode"], "automatic_discovery")
+        channels = {"arxiv-speech", "hf-asr", "hf-tts"}
+        self.assertEqual({project["id"] for project in data["projects"]}, channels)
+        for event in data["events"]:
+            self.assertEqual(event["provenance"], "harvested")
+            self.assertIn(event["project_id"], channels)
+        for profile in data["profiles"]:
+            self.assertTrue(profile.get("asset_key"))
+            self.assertIn(profile.get("feed_id"), channels)
+        self.assertGreater(len(json.loads((ROOT / "data/legacy-setup.json").read_text())["events"]), 0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
