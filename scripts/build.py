@@ -60,6 +60,14 @@ def project_map(data: dict) -> dict:
     return {p["id"]: p for p in data.get("projects", [])}
 
 
+def failure_text(value: object) -> str:
+    if isinstance(value,dict):
+        name = value.get('source_id') or value.get('project_id') or value.get('id') or 'Source'
+        reason = value.get('message') or value.get('reason') or value.get('error') or 'not checked'
+        return f'{name}: {reason}'
+    return str(value)
+
+
 def render_baseline(data: dict) -> str:
     projects = project_map(data)
     site = data["site"]
@@ -80,7 +88,7 @@ def render_baseline(data: dict) -> str:
         '<h3>Watch next</h3><ul>' + ''.join(f'<li>{esc(w.get("text"))}' + (f' <a href="{esc(w["source_url"])}">source</a>' if w.get("source_url") else '') + '</li>' for w in brief.get("watch_next", [])) + '</ul></section>',
         '<section><h2>Action board</h2><p class="meta">Persistent evidence-backed checks; evergreen items are not new alerts.</p><ul>' + ''.join(f'<li><strong>{esc(a.get("title"))}</strong> <span class="tag">{esc(a.get("category"))}</span><br>{esc(a.get("affects"))}<br><strong>Do:</strong> {esc(a.get("do"))} · <a href="{esc(a.get("source_url"))}">source</a></li>' for a in actions if not a.get("dismissed")) + '</ul></section>',
         '<section><h2>Historical milestones</h2><p class="meta">Curated dossier milestones; not source-reviewed weekly changes.</p><ol>' + ''.join(f'<li><time datetime="{esc(e["timestamp"])}">{esc(e["timestamp"][:10])}</time> · <strong>{esc(e["title"])}</strong> <span class="tag">{esc(e["category"])}</span><br>{esc(e["summary"])} · <a href="{esc(e["source_url"])}">source</a></li>' for e in events) + '</ol></section>',
-        '<section><h2>Source-reviewed checks</h2>' + ''.join(f'<article><h3><a href="{esc(r.get("url"))}">{esc(r.get("headline"))}</a></h3><p class="meta">{esc(r.get("checked_at"))} · {esc(r.get("status"))}</p><p>{esc("; ".join(r.get("failures", [])) if r.get("failures") else "No failures recorded.")}</p></article>' for r in runs) + '</section>',
+        '<section><h2>Source-reviewed checks</h2>' + ''.join(f'<article><h3><a href="{esc(r.get("url"))}">{esc(r.get("headline"))}</a></h3><p class="meta">{esc(r.get("checked_at"))} · {esc(r.get("status"))}</p><p>{esc("; ".join(failure_text(item) for item in r.get("failures", [])) if r.get("failures") else "No failures recorded.")}</p></article>' for r in runs) + '</section>',
         '<section><h2>Research profiles</h2>' + ''.join(f'<details><summary><strong>{esc(p["name"])}</strong> · {esc(p["category"])} — {esc(p["headline"])}</summary><p>{esc(p["summary"])}</p><p><strong>Build takeaway:</strong> {esc(p["buildTakeaway"])}</p><p><strong>Caveat:</strong> {esc(p["caveat"])}</p></details>' for p in profiles) + '</section>',
         '<section><h2>Experiments</h2>' + ''.join(f'<details><summary><strong>{esc(x["title"])}</strong> · {esc(x["subtitle"])}</summary><p>{esc(x["hypothesis"])}</p><p><strong>Metrics:</strong> {esc(x["metrics"])}</p><ol>' + ''.join(f'<li>{esc(step)}</li>' for step in x["steps"]) + f'</ol><p><strong>Deliverable:</strong> {esc(x["deliverable"])}</p></details>' for x in experiments) + '</section>',
         '</main><footer><p class="meta">Generated from normalized DATA schema v1. Schedule enabled: ' + esc(site.get("schedule", {}).get("enabled")) + '.</p></footer>'
@@ -95,7 +103,7 @@ def standalone(title: str, body: str, data: dict | None = None) -> str:
 
 def render_run_page(data: dict, run: dict) -> str:
     events = [e for e in data.get("events", []) if e.get("id") in set(run.get("event_ids", []))]
-    failures = ''.join(f'<li>{esc(f)}</li>' for f in run.get('failures', [])) or '<li>None recorded.</li>'
+    failures = ''.join(f'<li>{esc(failure_text(f))}</li>' for f in run.get('failures', [])) or '<li>None recorded.</li>'
     body = f'<p><a href="../index.html">Home</a> · <a href="../archive.html">Archive</a></p><h1>{esc(run["headline"])}</h1><p class="meta">Checked at {esc(run["checked_at"])} · status {esc(run["status"])}</p><h2>Reviewed events</h2><ol>' + ''.join(f'<li><strong>{esc(e["title"])}</strong> · {esc(e["timestamp"])}<p>{esc(e["summary"])}</p><a href="{esc(e["source_url"])}">Primary source</a></li>' for e in events) + ('<li>No reviewed events attached to this run.</li>' if not events else '') + f'</ol><h2>Failures</h2><ul>{failures}</ul>'
     return standalone(f'Check · {run["id"]}', body, run)
 

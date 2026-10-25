@@ -280,6 +280,7 @@ def ingest(payload: dict, validate_only: bool=False) -> dict:
     if run['id'] in existing_runs:
         if set(incoming_events) - set(existing_events) or set(incoming_actions) - set(existing_actions): raise UpdateError('a replay cannot add new ledger records')
         return {'data':candidate,'sources':copy.deepcopy(config),'replay':True}
+    if run['status'] == 'updated' and not (set(incoming_events) - set(existing_events)): raise UpdateError('an updated run must contain genuinely new reviewed activity')
     for event in incoming_events.values():
         if event['id'] not in existing_events: candidate['events'].append(event)
     for action in incoming_actions.values():

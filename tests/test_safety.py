@@ -73,6 +73,18 @@ class SafetyTests(unittest.TestCase):
         self.assertNotIn('<', encoded)
         self.assertEqual(json.loads(encoded), payload)
 
+    def test_partial_failure_objects_remain_readable(self):
+        self.payload['run']['status'] = 'partial'
+        self.payload['run']['failures'] = [{'source_id':'whisper','message':'Network unavailable; not checked'}]
+        self.payload['source_state']['whisper']['status'] = 'failed'
+        result = update.ingest(self.payload, validate_only=True)
+        self.assertIn('Network unavailable', build.render_baseline(result['data']))
+        self.assertIn('whisper: Network unavailable', build.render_run_page(result['data'], self.payload['run']))
+
+    def test_updated_run_without_new_events_is_rejected(self):
+        self.payload['run']['status'] = 'updated'
+        with self.assertRaises(update.UpdateError): update.ingest(self.payload, validate_only=True)
+
 
 if __name__ == '__main__':
     unittest.main()
