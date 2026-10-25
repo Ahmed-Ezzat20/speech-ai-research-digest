@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title>Speech AI Research Digest</title>
+<subtitle>Source-backed speech research for building original Arabic models and datasets.</subtitle>
+<id>https://ahmed-ezzat20.github.io/speech-ai-research-digest/</id>
+<link href="https://ahmed-ezzat20.github.io/speech-ai-research-digest/" rel="alternate"/>
+<link href="https://ahmed-ezzat20.github.io/speech-ai-research-digest/feed.xml" rel="self"/>
+<updated>2026-10-25T11:14:46Z</updated>
+<author><name>Speech AI Research Digest</name></author>
+<entry>
+<id>https://ahmed-ezzat20.github.io/speech-ai-research-digest/briefs/brief-setup-import-20261025T111446Z.html</id>
+<title>Weekly snapshot · 2026-10-18T21:00:00Z → 2026-10-25T21:00:00Z</title>
+<updated>2026-10-25T11:14:46Z</updated>
+<link href="https://ahmed-ezzat20.github.io/speech-ai-research-digest/briefs/brief-setup-import-20261025T111446Z.html"/>
+<summary>This is the honest orientation baseline imported from the verified research dossiers. No source-reviewed weekly changes have been recorded yet; the historical milestones below are curated context, not this week’s monitoring results.</summary>
+</entry>
+</feed>

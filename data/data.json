@@ -1,0 +1,671 @@
+{
+  "schema_version": 1,
+  "site": {
+    "title": "Speech AI Research Digest",
+    "description": "Source-backed speech research for building original Arabic models and datasets.",
+    "url": "https://ahmed-ezzat20.github.io/speech-ai-research-digest",
+    "repo_url": "https://github.com/Ahmed-Ezzat20/speech-ai-research-digest",
+    "timezone": "Africa/Cairo",
+    "tracking_since": "2022-12-06",
+    "schedule": {
+      "enabled": true,
+      "times": [
+        "08:00",
+        "22:00"
+      ],
+      "mechanism": "Manus",
+      "confirmed_at": "2026-10-25T11:29:24.006Z"
+    },
+    "generated_at": "2026-10-25T11:30:37Z"
+  },
+  "projects": [
+    {
+      "id": "habibi",
+      "name": "Habibi",
+      "color": "#70528d",
+      "category": "TTS",
+      "sources": [
+        {
+          "label": "Habibi paper",
+          "url": "https://arxiv.org/abs/2601.13802"
+        },
+        {
+          "label": "Official training code",
+          "url": "https://github.com/SWivid/Habibi-TTS"
+        },
+        {
+          "label": "Official model card",
+          "url": "https://huggingface.co/SWivid/Habibi-TTS"
+        }
+      ]
+    },
+    {
+      "id": "f5tts",
+      "name": "F5-TTS",
+      "color": "#70528d",
+      "category": "TTS",
+      "sources": [
+        {
+          "label": "Official repository",
+          "url": "https://github.com/SWivid/F5-TTS"
+        },
+        {
+          "label": "F5-TTS paper",
+          "url": "https://arxiv.org/abs/2410.06885"
+        },
+        {
+          "label": "Shared checkpoint cards",
+          "url": "https://raw.githubusercontent.com/SWivid/F5-TTS/main/src/f5_tts/infer/SHARED.md"
+        }
+      ]
+    },
+    {
+      "id": "casablanca",
+      "name": "Casablanca",
+      "color": "#176b52",
+      "category": "Datasets",
+      "sources": [
+        {
+          "label": "EMNLP publication",
+          "url": "https://aclanthology.org/2024.emnlp-main.1211/"
+        },
+        {
+          "label": "Dataset paper",
+          "url": "https://arxiv.org/html/2410.04527v1"
+        },
+        {
+          "label": "Official dataset card",
+          "url": "https://huggingface.co/datasets/UBC-NLP/Casablanca"
+        }
+      ]
+    },
+    {
+      "id": "qwen3tts",
+      "name": "Qwen3-TTS",
+      "color": "#70528d",
+      "category": "TTS",
+      "sources": [
+        {
+          "label": "Official Qwen3-TTS repository",
+          "url": "https://github.com/QwenLM/Qwen3-TTS"
+        },
+        {
+          "label": "Technical report",
+          "url": "https://arxiv.org/html/2601.15621v1"
+        },
+        {
+          "label": "Official Base model card",
+          "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base"
+        }
+      ]
+    },
+    {
+      "id": "whisper",
+      "name": "OpenAI Whisper",
+      "color": "#2c628a",
+      "category": "ASR",
+      "sources": [
+        {
+          "label": "Official Whisper repository",
+          "url": "https://github.com/openai/whisper"
+        },
+        {
+          "label": "Original Whisper paper",
+          "url": "https://arxiv.org/html/2212.04356v1"
+        },
+        {
+          "label": "Official large-v3 model card",
+          "url": "https://huggingface.co/openai/whisper-large-v3"
+        }
+      ]
+    },
+    {
+      "id": "openaiaudio",
+      "name": "OpenAI gpt-realtime",
+      "color": "#a85c06",
+      "category": "Competitors",
+      "sources": [
+        {
+          "label": "gpt-realtime announcement",
+          "url": "https://openai.com/index/introducing-gpt-realtime/"
+        },
+        {
+          "label": "Model documentation",
+          "url": "https://developers.openai.com/api/docs/models/gpt-realtime"
+        },
+        {
+          "label": "Separate TTS language guide",
+          "url": "https://developers.openai.com/api/docs/guides/text-to-speech"
+        }
+      ]
+    }
+  ],
+  "profiles": [
+    {
+      "id": "habibi",
+      "name": "Habibi",
+      "category": "TTS",
+      "headline": "A unified foundation for Arabic dialect TTS",
+      "summary": "An MSA-first training curriculum, regional conditioning, and released Arabic checkpoints—including Egyptian Arabic.",
+      "architecture": "F5-TTS v1 base using mel spectrograms and raw text characters. Chinese/English initialization → MSA supervised fine-tuning → unified or specialized dialect models, with reference context and optional regional tokens such as EGY.",
+      "languages": "Arabic: MSA plus SAU, UAE, ALG, IRQ, EGY, MAR, OMN, TUN, LEV, SDN and LBY regional identifiers. Egyptian Arabic is explicit; the paper notes Saidi/Upper Egyptian in its convention.",
+      "availability": "Official training/inference code, checkpoints, evaluation scripts and benchmark artifacts. Raw training data include internally held and public-source recordings; full redistributability is not established.",
+      "license": "Code: MIT. Unified, SAU and UAE checkpoints: CC-BY-NC-SA-4.0. Specialized ALG, EGY, IRQ, MAR and MSA checkpoints: Apache 2.0. Upstream dataset rights must be audited independently.",
+      "sourceDate": "20 Jan 2026; arXiv v2 updated 31 Mar 2026",
+      "facts": [
+        "The standardized benchmark covers MSA, SAU, UAE, ALG, IRQ, EGY and MAR, with more than 11,000 utterances and manually verified/filtered transcripts.",
+        "The paper reports 1,857.3 hours and 879,339 utterances after corpus expansion. Its pipeline repurposes ASR data using speaking-rate filtering, denoising, corpus-specific text rules and short-clip merging.",
+        "The curriculum is MSA first, then dialectal data; reported ablations examine regional identifiers and reference context.",
+        "Evaluation includes general and dialect-specific ASR measurements, exposing potential evaluator bias across dialects."
+      ],
+      "buildTakeaway": "Test MSA → Egyptian fine-tuning against unified dialect conditioning on a speaker-disjoint EGY set.",
+      "caveat": "Open artifacts are not blanket permission to reuse all source audio. Clear each upstream data license before training, redistribution or commercial use. Paper-reported benchmark results do not establish performance on your own speakers, domains or code-switching data.",
+      "links": [
+        {
+          "label": "Habibi paper",
+          "url": "https://arxiv.org/abs/2601.13802"
+        },
+        {
+          "label": "Official training code",
+          "url": "https://github.com/SWivid/Habibi-TTS"
+        },
+        {
+          "label": "Official model card",
+          "url": "https://huggingface.co/SWivid/Habibi-TTS"
+        }
+      ]
+    },
+    {
+      "id": "f5tts",
+      "name": "F5-TTS",
+      "category": "TTS",
+      "headline": "Flow matching, without an alignment pipeline",
+      "summary": "A non-autoregressive Diffusion Transformer with open training code. The original base checkpoint is Chinese/English—not an Arabic baseline by default.",
+      "architecture": "Non-autoregressive flow-matching TTS with a Diffusion Transformer and ConvNeXt-based text refinement. The described design needs no separate duration model, text encoder or phoneme alignment. Sway Sampling selects inference flow steps.",
+      "languages": "Original base checkpoints: Chinese and English from Emilia. Arabic/English appears separately in the official community model index through SILMA AI. Reviewed sources do not establish Egyptian-dialect quality.",
+      "availability": "Open training and fine-tuning entry points, inference code and public checkpoints. The paper describes public multilingual training data; the base model card identifies Emilia Chinese/English data. Community Arabic artifacts are separate releases.",
+      "license": "Repository code: MIT. Repository pretrained models: CC-BY-NC because of Emilia data. The separately listed SILMA Arabic/English model is labelled Apache-2.0; check the exact checkpoint and dataset terms.",
+      "sourceDate": "9 Oct 2024; arXiv v3 updated 20 May 2025",
+      "facts": [
+        "F5-TTS is fully non-autoregressive and uses flow matching with a Diffusion Transformer.",
+        "ConvNeXt text refinement supports text/speech alignment; Sway Sampling is an inference-time method, not a required retraining step.",
+        "Training and fine-tuning entry points are released, while the original base model card describes Emilia Chinese/English data.",
+        "A community SILMA AI Arabic/English model appears in the official index; this listing is not a verified Egyptian-dialect benchmark."
+      ],
+      "buildTakeaway": "Compare a small Egyptian fine-tune with training from scratch using identical held-out speakers and prompts.",
+      "caveat": "Do not infer Arabic capability from the original base checkpoint or Egyptian quality from a community model listing. Document corpus provenance, diacritics, vocabulary and code-switching evaluation separately.",
+      "links": [
+        {
+          "label": "Official repository",
+          "url": "https://github.com/SWivid/F5-TTS"
+        },
+        {
+          "label": "F5-TTS paper",
+          "url": "https://arxiv.org/abs/2410.06885"
+        },
+        {
+          "label": "Shared checkpoint cards",
+          "url": "https://raw.githubusercontent.com/SWivid/F5-TTS/main/src/f5_tts/infer/SHARED.md"
+        }
+      ]
+    },
+    {
+      "id": "casablanca",
+      "name": "Casablanca",
+      "category": "Datasets",
+      "headline": "Eight dialects. A more honest Arabic ASR test.",
+      "summary": "Manual transcripts, dialect labels, and code-switching annotations across eight Arabic varieties. Source audio is not redistributed.",
+      "architecture": "Arabic dialect dataset and ASR benchmark, not a speech-generation model. The paper evaluates Whisper, SeamlessM4T and MMS, with dialect-specific fine-tuning case studies.",
+      "languages": "Algerian, Egyptian, Emirati, Jordanian, Mauritanian/Hassaniya, Moroccan, Palestinian and Yemeni Arabic. Dialect labels are explicit at country level.",
+      "availability": "The paper reports URLs, timestamps, annotations and metadata, not bundled source recordings. The reviewed Hugging Face card says only validation and test sets are released. Copyright restrictions apply to source audio.",
+      "license": "No permissive dataset license is established by the reviewed card. The paper describes research-only release conditions and original video copyright remaining with owners. Do not assume audio redistribution or commercial training rights.",
+      "sourceDate": "6 Oct 2024 arXiv record; EMNLP 2024",
+      "facts": [
+        "The paper reports 47:53:20 total speech and 40,793 manually annotated segments across eight dialects.",
+        "Reported Egyptian coverage is approximately 7:04:16 and Moroccan coverage 6:15:02.",
+        "Annotations include transcription, dialect/country, gender and code-switching. Some Algerian/Moroccan samples include French; other varieties may include English.",
+        "The current reviewed dataset card releases validation/test material only. The paper withholds source audio because of copyright."
+      ],
+      "buildTakeaway": "Keep the evaluation slices untouched; build a separately licensed Egyptian code-switching training corpus.",
+      "caveat": "This is not a clean, speaker-controlled TTS corpus. Entertainment-video clips may contain multiple speakers, and gender balance varies. Recheck availability and secure lawful audio access; do not repurpose held-out evaluation data for training.",
+      "links": [
+        {
+          "label": "EMNLP publication",
+          "url": "https://aclanthology.org/2024.emnlp-main.1211/"
+        },
+        {
+          "label": "Dataset paper",
+          "url": "https://arxiv.org/html/2410.04527v1"
+        },
+        {
+          "label": "Official dataset card",
+          "url": "https://huggingface.co/datasets/UBC-NLP/Casablanca"
+        }
+      ]
+    },
+    {
+      "id": "qwen3tts",
+      "name": "Qwen3-TTS",
+      "category": "TTS",
+      "headline": "An open multi-codebook speech stack to study",
+      "summary": "Streaming generation with released models and tokenizers. A useful architectural reference, but Arabic is not officially listed.",
+      "architecture": "The 12Hz line uses a 12.5 Hz, 16-layer multi-codebook tokenizer. A semantic first codebook and acoustic residual codebooks feed a dual-track autoregressive LM with multi-token prediction, then a causal ConvNet waveform decoder.",
+      "languages": "Official list: Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish and Italian. Arabic and Egyptian Arabic are not listed; some Chinese dialect voice profiles are documented.",
+      "availability": "Official 0.6B/1.7B 12Hz models, Base voice-cloning/fine-tuning variants, CustomVoice/VoiceDesign variants, and tokenizers. The report describes 5M+ training hours but does not release that corpus or a reusable provenance ledger.",
+      "license": "Released models and tokenizers are Apache 2.0 according to the technical report; the official 0.6B Base card is Apache-2.0. This does not grant rights to undisclosed training audio.",
+      "sourceDate": "Official 12Hz release: 22 Jan 2026",
+      "facts": [
+        "The 12Hz stack combines a 12.5 Hz, 16-layer tokenizer with a dual-track autoregressive LM, multi-token prediction and causal ConvNet decoder.",
+        "The repository lists 0.6B and 1.7B Base, CustomVoice and VoiceDesign models. Base supports reference-audio cloning and fine-tuning.",
+        "The ten officially documented languages exclude Arabic and Egyptian dialects.",
+        "More than five million training hours are described in the report; the underlying corpus is not provided as an open, provenance-documented dataset."
+      ],
+      "buildTakeaway": "Ablate semantic-plus-acoustic codebooks against a simpler tokenizer on consented Egyptian speech.",
+      "caveat": "Treat the released stack as an architecture reference, not proof of Arabic quality. Arabic adaptation requires independent data and evaluation. Openness of weights and tokenizers does not imply openness of training audio.",
+      "links": [
+        {
+          "label": "Official Qwen3-TTS repository",
+          "url": "https://github.com/QwenLM/Qwen3-TTS"
+        },
+        {
+          "label": "Technical report",
+          "url": "https://arxiv.org/html/2601.15621v1"
+        },
+        {
+          "label": "Official Base model card",
+          "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base"
+        }
+      ]
+    },
+    {
+      "id": "whisper",
+      "name": "OpenAI Whisper",
+      "category": "ASR",
+      "headline": "A strong baseline is not a dialect benchmark",
+      "summary": "Public multilingual weights and inference code, with explicit Arabic representation. Egyptian-dialect quality still needs your own evaluation.",
+      "architecture": "Encoder–decoder Transformer over log-Mel audio with task/language tokens and a 30-second receptive field. The original design uses 80 Mel channels; large-v3 changes the input to 128 Mel bins.",
+      "languages": "Arabic is explicitly represented by the ar/arabic tokenizer entry. Multilingual language support is not a guarantee of Egyptian-dialect quality; model-card caveats note uneven performance by language, accent and dialect.",
+      "availability": "Public inference code and pretrained English/multilingual checkpoints. The original 680,000-hour training corpus is described, not released. The large-v3 card documents a later 1M-hour weakly labelled plus 4M-hour pseudo-labelled mixture.",
+      "license": "Official code and model weights: MIT. This does not relicense the web-source audio/transcripts or resolve their provenance and downstream usage rights.",
+      "sourceDate": "Original paper first posted: 6 Dec 2022",
+      "facts": [
+        "Special tokens select transcription, translation, language identification and related tasks in a shared sequence-to-sequence framework.",
+        "Original training uses filtered web audio/transcript pairs segmented into 30-second clips.",
+        "The paper relates performance to per-language training volume and notes English-heavy collection; multilingual quality is uneven.",
+        "The model card warns about hallucinated text, repetition and language/accent/dialect disparities."
+      ],
+      "buildTakeaway": "Freeze an Egyptian code-switching test set and let WER/CER error clusters guide your own model priorities.",
+      "caveat": "An Arabic token is not evidence of Egyptian accuracy. Use consented, speaker-diverse data and report hallucination, repetition, entity and numeral errors alongside WER/CER. The training corpus is not an open data substitute.",
+      "links": [
+        {
+          "label": "Official Whisper repository",
+          "url": "https://github.com/openai/whisper"
+        },
+        {
+          "label": "Original Whisper paper",
+          "url": "https://arxiv.org/html/2212.04356v1"
+        },
+        {
+          "label": "Official large-v3 model card",
+          "url": "https://huggingface.co/openai/whisper-large-v3"
+        }
+      ]
+    },
+    {
+      "id": "openaiaudio",
+      "name": "OpenAI gpt-realtime",
+      "category": "Competitors",
+      "headline": "The frontier is moving to direct speech-to-speech",
+      "summary": "A proprietary realtime audio model rather than a chained ASR–TTS pipeline. Study the capabilities, not an unavailable training recipe.",
+      "architecture": "OpenAI describes a single direct speech-to-speech model, not separate STT and TTS stages. Public interfaces include WebRTC, WebSocket and SIP. The reviewed docs list a 32,000-token context and no fine-tuning support.",
+      "languages": "Announcement examples include Spanish, Chinese, Japanese and French. The reviewed gpt-realtime sources do not explicitly establish Arabic or Egyptian quality. Arabic in a separate GPT-4o mini TTS guide is not evidence for this model.",
+      "availability": "Paid hosted API. General availability announced 28 Aug 2025. No released training code, model weights or training corpus in the cited sources.",
+      "license": "Proprietary OpenAI hosted service governed by service terms and usage policies. No open weights or dataset license is provided in the reviewed sources.",
+      "sourceDate": "General availability announcement: 28 Aug 2025",
+      "facts": [
+        "OpenAI announced gpt-realtime and general availability of the Realtime API on 28 August 2025.",
+        "The announcement describes direct audio processing/generation in one model instead of a traditional STT → language model → TTS chain.",
+        "Customer collaboration is mentioned, but training datasets, weights and independent training recipes are not released.",
+        "Arabic/Egyptian quality is not established by the reviewed sources; internal provider evaluations are not a reproducible dialect benchmark."
+      ],
+      "buildTakeaway": "Design matched Egyptian tests for turn-taking, code-switching, time-to-first-audio and dialect naturalness.",
+      "caveat": "Missing Arabic evidence does not prove failure; it means quality is unverified here. Do not mix separate OpenAI model language claims. Hosted aliases and behavior can change, and internal scores should not be treated as independent benchmarks.",
+      "links": [
+        {
+          "label": "gpt-realtime announcement",
+          "url": "https://openai.com/index/introducing-gpt-realtime/"
+        },
+        {
+          "label": "Model documentation",
+          "url": "https://developers.openai.com/api/docs/models/gpt-realtime"
+        },
+        {
+          "label": "Separate TTS language guide",
+          "url": "https://developers.openai.com/api/docs/guides/text-to-speech"
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "curated-whisper-20221206",
+      "project_id": "whisper",
+      "timestamp": "2022-12-06T12:00:00Z",
+      "title": "Whisper paper establishes a multilingual encoder–decoder baseline",
+      "type": "paper",
+      "category": "ASR",
+      "summary": "OpenAI publishes the original multilingual Whisper paper and its Arabic tokenization context. This is a historical baseline, not evidence of Egyptian-dialect quality.",
+      "source_url": "https://arxiv.org/html/2212.04356v1",
+      "significance": "notable",
+      "provenance": "curated",
+      "action": null
+    },
+    {
+      "id": "curated-casablanca-20241006",
+      "project_id": "casablanca",
+      "timestamp": "2024-10-06T12:00:00Z",
+      "title": "Casablanca dataset paper documents eight Arabic dialect evaluation slices",
+      "type": "dataset",
+      "category": "Datasets",
+      "summary": "The Casablanca paper reports manually annotated dialect and code-switching material while withholding source audio because of copyright.",
+      "source_url": "https://arxiv.org/html/2410.04527v1",
+      "significance": "notable",
+      "provenance": "curated",
+      "action": null
+    },
+    {
+      "id": "curated-f5tts-20241009",
+      "project_id": "f5tts",
+      "timestamp": "2024-10-09T12:00:00Z",
+      "title": "F5-TTS releases flow-matching TTS training and inference research",
+      "type": "paper",
+      "category": "TTS",
+      "summary": "The F5-TTS paper describes a non-autoregressive flow-matching Diffusion Transformer and public training/fine-tuning entry points.",
+      "source_url": "https://arxiv.org/abs/2410.06885",
+      "significance": "notable",
+      "provenance": "curated",
+      "action": null
+    },
+    {
+      "id": "curated-openaiaudio-20250828",
+      "project_id": "openaiaudio",
+      "timestamp": "2025-08-28T12:00:00Z",
+      "title": "OpenAI announces general availability for gpt-realtime",
+      "type": "competitor",
+      "category": "Competitors",
+      "summary": "The announcement describes direct speech-to-speech processing and a hosted realtime API; no weights or reproducible training recipe are released.",
+      "source_url": "https://openai.com/index/introducing-gpt-realtime/",
+      "significance": "notable",
+      "provenance": "curated",
+      "action": null
+    },
+    {
+      "id": "curated-habibi-20260120",
+      "project_id": "habibi",
+      "timestamp": "2026-01-20T12:00:00Z",
+      "title": "Habibi publishes a unified foundation for Arabic dialect TTS",
+      "type": "paper",
+      "category": "TTS",
+      "summary": "Habibi reports an MSA-first curriculum, regional conditioning, Arabic checkpoints and an Egyptian slice; upstream audio rights still require independent review.",
+      "source_url": "https://arxiv.org/abs/2601.13802",
+      "significance": "notable",
+      "provenance": "curated",
+      "action": null
+    },
+    {
+      "id": "curated-qwen3tts-20260122",
+      "project_id": "qwen3tts",
+      "timestamp": "2026-01-22T12:00:00Z",
+      "title": "Qwen3-TTS publishes its 12Hz multi-codebook speech stack",
+      "type": "weights",
+      "category": "TTS",
+      "summary": "Qwen3-TTS releases 0.6B and 1.7B model lines with a multi-codebook tokenizer; Arabic is not listed among the official languages.",
+      "source_url": "https://arxiv.org/html/2601.15621v1",
+      "significance": "notable",
+      "provenance": "curated",
+      "action": null
+    }
+  ],
+  "actions": [
+    {
+      "id": "evergreen-habibi-f5-license",
+      "project_id": "habibi",
+      "category": "license",
+      "title": "Verify upstream rights before using Habibi or F5-TTS artifacts",
+      "affects": "Training or redistribution can inherit restrictions from Emilia audio, checkpoints, and upstream datasets even when code is open.",
+      "do": "Read the exact code, checkpoint, and dataset terms; record provenance and obtain permission before commercial use or redistribution.",
+      "source_url": "https://github.com/SWivid/Habibi-TTS",
+      "timestamp": "2026-10-25T11:14:46Z",
+      "dismissed": false,
+      "deadline": null,
+      "evergreen": true
+    },
+    {
+      "id": "evergreen-casablanca-heldout",
+      "project_id": "casablanca",
+      "category": "data",
+      "title": "Keep Casablanca validation and test slices held out",
+      "affects": "Using benchmark material for training would invalidate dialect and code-switching evaluation.",
+      "do": "Treat the released evaluation material as held out and build a separately licensed Egyptian training corpus.",
+      "source_url": "https://huggingface.co/datasets/UBC-NLP/Casablanca",
+      "timestamp": "2026-10-25T11:14:46Z",
+      "dismissed": false,
+      "deadline": null,
+      "evergreen": true
+    },
+    {
+      "id": "evergreen-qwen-arabic",
+      "project_id": "qwen3tts",
+      "category": "evaluation",
+      "title": "Do not list Arabic support without direct evidence",
+      "affects": "Qwen3-TTS’s official language list does not include Arabic or Egyptian Arabic.",
+      "do": "Run a consented Egyptian evaluation and report the protocol before describing Arabic capability.",
+      "source_url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+      "timestamp": "2026-10-25T11:14:46Z",
+      "dismissed": false,
+      "deadline": null,
+      "evergreen": true
+    },
+    {
+      "id": "evergreen-whisper-hallucination",
+      "project_id": "whisper",
+      "category": "evaluation",
+      "title": "Evaluate Whisper hallucination and repetition explicitly",
+      "affects": "WER/CER alone can hide hallucinated text, repeated phrases, entities, numerals, and dialect failures.",
+      "do": "Freeze an Egyptian code-switching test set and publish error clusters alongside WER/CER.",
+      "source_url": "https://huggingface.co/openai/whisper-large-v3",
+      "timestamp": "2026-10-25T11:14:46Z",
+      "dismissed": false,
+      "deadline": null,
+      "evergreen": true
+    }
+  ],
+  "runs": [
+    {
+      "id": "setup-import-20261025T111446Z",
+      "checked_at": "2026-10-25T11:14:46Z",
+      "status": "setup",
+      "headline": "Setup/import baseline; no source-reviewed weekly changes yet.",
+      "event_ids": [],
+      "sources_checked": [],
+      "failures": [],
+      "url": "digests/setup-import-20261025T111446Z.html"
+    }
+  ],
+  "brief": {
+    "id": "brief-setup-import-20261025T111446Z",
+    "generated_at": "2026-10-25T11:14:46Z",
+    "period_start": "2026-10-18T21:00:00Z",
+    "period_end": "2026-10-25T21:00:00Z",
+    "headline": "Setup/import baseline: no reviewed weekly changes yet.",
+    "summary": "This is the honest orientation baseline imported from the verified research dossiers. No source-reviewed weekly changes have been recorded yet; the historical milestones below are curated context, not this week’s monitoring results.",
+    "themes": [
+      {
+        "title": "Arabic TTS evidence is becoming more specific",
+        "body": "Baseline orientation: Habibi and F5-TTS show why dialect conditioning, corpus provenance, and held-out native evaluation must be kept separate. No new weekly source-reviewed event is claimed.",
+        "so_what": "Treat architecture and released checkpoints as starting points for controlled Egyptian experiments, not as a benchmark result.",
+        "source_urls": [
+          "https://arxiv.org/abs/2601.13802",
+          "https://arxiv.org/abs/2410.06885"
+        ]
+      },
+      {
+        "title": "Dataset access is not the same as training permission",
+        "body": "Baseline orientation: Casablanca provides valuable dialect annotations while its source audio remains constrained. The same distinction applies to upstream audio behind open code or weights.",
+        "so_what": "Keep license, consent, provenance, and held-out evaluation decisions explicit before building a corpus.",
+        "source_urls": [
+          "https://huggingface.co/datasets/UBC-NLP/Casablanca",
+          "https://aclanthology.org/2024.emnlp-main.1211/"
+        ]
+      },
+      {
+        "title": "Arabic capability still needs direct evidence",
+        "body": "Baseline orientation: Whisper includes Arabic representation, while Qwen3-TTS’s official language list does not include Arabic. Neither statement substitutes for an Egyptian evaluation.",
+        "so_what": "Freeze matched Egyptian and code-switching tests before drawing model-building conclusions.",
+        "source_urls": [
+          "https://huggingface.co/openai/whisper-large-v3",
+          "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base"
+        ]
+      }
+    ],
+    "watch_next": [
+      {
+        "text": "A first source-reviewed run should verify official release/revision pages and record either reviewed events or an honest quiet result; failures remain partial.",
+        "source_url": null
+      }
+    ],
+    "counts": {
+      "habibi": 0,
+      "f5tts": 0,
+      "casablanca": 0,
+      "qwen3tts": 0,
+      "whisper": 0,
+      "openaiaudio": 0
+    },
+    "event_ids": []
+  },
+  "headlines": [
+    {
+      "run_id": "setup-import-20261025T111446Z",
+      "checked_at": "2026-10-25T11:14:46Z",
+      "headline": "Setup/import baseline; no source-reviewed weekly changes yet."
+    }
+  ],
+  "snapshots": [
+    {
+      "id": "brief-setup-import-20261025T111446Z",
+      "generated_at": "2026-10-25T11:14:46Z",
+      "period_start": "2026-10-18T21:00:00Z",
+      "period_end": "2026-10-25T21:00:00Z",
+      "headline": "Setup/import baseline: no reviewed weekly changes yet.",
+      "summary": "This is the honest orientation baseline imported from the verified research dossiers. No source-reviewed weekly changes have been recorded yet; the historical milestones below are curated context, not this week’s monitoring results.",
+      "themes": [
+        {
+          "title": "Arabic TTS evidence is becoming more specific",
+          "body": "Baseline orientation: Habibi and F5-TTS show why dialect conditioning, corpus provenance, and held-out native evaluation must be kept separate. No new weekly source-reviewed event is claimed.",
+          "so_what": "Treat architecture and released checkpoints as starting points for controlled Egyptian experiments, not as a benchmark result.",
+          "source_urls": [
+            "https://arxiv.org/abs/2601.13802",
+            "https://arxiv.org/abs/2410.06885"
+          ]
+        },
+        {
+          "title": "Dataset access is not the same as training permission",
+          "body": "Baseline orientation: Casablanca provides valuable dialect annotations while its source audio remains constrained. The same distinction applies to upstream audio behind open code or weights.",
+          "so_what": "Keep license, consent, provenance, and held-out evaluation decisions explicit before building a corpus.",
+          "source_urls": [
+            "https://huggingface.co/datasets/UBC-NLP/Casablanca",
+            "https://aclanthology.org/2024.emnlp-main.1211/"
+          ]
+        },
+        {
+          "title": "Arabic capability still needs direct evidence",
+          "body": "Baseline orientation: Whisper includes Arabic representation, while Qwen3-TTS’s official language list does not include Arabic. Neither statement substitutes for an Egyptian evaluation.",
+          "so_what": "Freeze matched Egyptian and code-switching tests before drawing model-building conclusions.",
+          "source_urls": [
+            "https://huggingface.co/openai/whisper-large-v3",
+            "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base"
+          ]
+        }
+      ],
+      "watch_next": [
+        {
+          "text": "A first source-reviewed run should verify official release/revision pages and record either reviewed events or an honest quiet result; failures remain partial.",
+          "source_url": null
+        }
+      ],
+      "counts": {
+        "habibi": 0,
+        "f5tts": 0,
+        "casablanca": 0,
+        "qwen3tts": 0,
+        "whisper": 0,
+        "openaiaudio": 0
+      },
+      "event_ids": [],
+      "url": "briefs/brief-setup-import-20261025T111446Z.html"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "egyptian-asr",
+      "category": "ASR",
+      "title": "Egyptian code-switching ASR",
+      "subtitle": "Build an evaluation set before training a better recognizer.",
+      "hypothesis": "A carefully curated Egyptian Arabic–English corpus could reveal systematic errors that aggregate multilingual scores conceal.",
+      "steps": [
+        "Collect consented, speaker-diverse Egyptian Arabic–English speech.",
+        "Define transcription rules for loanwords, mixed scripts, punctuation and numerals.",
+        "Split by speaker and recording session to prevent leakage.",
+        "Establish a frozen baseline, then fine-tune and compare on the same held-out test set."
+      ],
+      "metrics": "Report WER and CER per dialect, code-switch density, noise condition and speaker group. Publish normalization rules and confidence intervals.",
+      "deliverable": "A versioned evaluation set, dataset card, reproducible baseline and error taxonomy.",
+      "tags": [
+        "Whisper baseline",
+        "Code-switching",
+        "Data-first"
+      ]
+    },
+    {
+      "id": "dialect-tts",
+      "category": "TTS",
+      "title": "Dialect-controllable Arabic TTS",
+      "subtitle": "Separate dialect fidelity from voice quality.",
+      "hypothesis": "Explicit dialect conditioning and consistent text normalization may improve pronunciation without conflating dialect with speaker identity.",
+      "steps": [
+        "Audit open training code and model/data licenses before selecting a baseline.",
+        "Curate consented parallel dialect prompts with pronunciation annotations.",
+        "Train a small controlled ablation: baseline versus dialect-conditioned model.",
+        "Evaluate unseen speakers and texts with native dialect listeners."
+      ],
+      "metrics": "Track intelligibility, pronunciation errors, speaker similarity, native-listener dialect fidelity, MOS protocol and inference real-time factor. Do not compare MOS across mismatched protocols.",
+      "deliverable": "A reproducible dialect-conditioning ablation and an ethically sourced evaluation audio pack.",
+      "tags": [
+        "F5-TTS / Habibi",
+        "Ablations",
+        "Native evaluation"
+      ]
+    },
+    {
+      "id": "data-pipeline",
+      "category": "Datasets",
+      "title": "An Arabic speech data foundry",
+      "subtitle": "Make quality and provenance part of the training pipeline.",
+      "hypothesis": "Transparent provenance, robust deduplication and dialect-aware quality checks could produce a more useful corpus than collecting more unfiltered hours.",
+      "steps": [
+        "Document recording consent, usage rights and retention for every source.",
+        "Track audio hashes, source lineage and speaker/session identifiers.",
+        "Apply VAD, quality filtering, transcription review and dialect annotations.",
+        "Freeze speaker-disjoint splits and publish a dataset card with limitations."
+      ],
+      "metrics": "Track consent coverage, duplicate rate, transcription agreement, clipping/noise, dialect balance and train/test contamination.",
+      "deliverable": "A versioned curation pipeline, schema, quality dashboard and release checklist.",
+      "tags": [
+        "Provenance",
+        "Quality gates",
+        "Reproducibility"
+      ]
+    }
+  ]
+}

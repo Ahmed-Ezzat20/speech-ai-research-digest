@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "timezone": "Africa/Cairo",
+  "schedule": {
+    "enabled": true,
+    "times": [
+      "08:00",
+      "22:00"
+    ],
+    "mechanism": "Manus",
+    "confirmed_at": "2026-10-25T11:29:24.006Z"
+  },
+  "last_run": null,
+  "last_snapshot": "2026-10-25T11:14:46Z",
+  "sources": [
+    {
+      "id": "habibi",
+      "project_id": "habibi",
+      "name": "Habibi",
+      "kind": "model",
+      "urls": [
+        "https://github.com/SWivid/Habibi-TTS/releases",
+        "https://github.com/SWivid/Habibi-TTS/tags",
+        "https://github.com/SWivid/Habibi-TTS",
+        "https://huggingface.co/SWivid/Habibi-TTS",
+        "https://arxiv.org/abs/2601.13802"
+      ],
+      "channels": [
+        "github_releases",
+        "github_tags",
+        "model_card",
+        "paper"
+      ],
+      "cursor": null,
+      "last_run": null,
+      "last_checked_at": null,
+      "last_status": null
+    },
+    {
+      "id": "f5tts",
+      "project_id": "f5tts",
+      "name": "F5-TTS",
+      "kind": "model/training",
+      "urls": [
+        "https://github.com/SWivid/F5-TTS/releases",
+        "https://github.com/SWivid/F5-TTS/tags",
+        "https://github.com/SWivid/F5-TTS",
+        "https://raw.githubusercontent.com/SWivid/F5-TTS/main/src/f5_tts/infer/SHARED.md",
+        "https://arxiv.org/abs/2410.06885"
+      ],
+      "channels": [
+        "github_releases",
+        "github_tags",
+        "model_card",
+        "paper"
+      ],
+      "cursor": null,
+      "last_run": null,
+      "last_checked_at": null,
+      "last_status": null
+    },
+    {
+      "id": "casablanca",
+      "project_id": "casablanca",
+      "name": "Casablanca",
+      "kind": "dataset",
+      "urls": [
+        "https://huggingface.co/datasets/UBC-NLP/Casablanca",
+        "https://aclanthology.org/2024.emnlp-main.1211/",
+        "https://arxiv.org/html/2410.04527v1"
+      ],
+      "channels": [
+        "dataset_card",
+        "paper",
+        "publication"
+      ],
+      "cursor": null,
+      "last_run": null,
+      "last_checked_at": null,
+      "last_status": null
+    },
+    {
+      "id": "qwen3tts",
+      "project_id": "qwen3tts",
+      "name": "Qwen3-TTS",
+      "kind": "model",
+      "urls": [
+        "https://github.com/QwenLM/Qwen3-TTS/releases",
+        "https://github.com/QwenLM/Qwen3-TTS/tags",
+        "https://github.com/QwenLM/Qwen3-TTS",
+        "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base",
+        "https://arxiv.org/html/2601.15621v1"
+      ],
+      "channels": [
+        "github_releases",
+        "github_tags",
+        "model_card",
+        "paper"
+      ],
+      "cursor": null,
+      "last_run": null,
+      "last_checked_at": null,
+      "last_status": null
+    },
+    {
+      "id": "whisper",
+      "project_id": "whisper",
+      "name": "OpenAI Whisper",
+      "kind": "model",
+      "urls": [
+        "https://github.com/openai/whisper/releases",
+        "https://github.com/openai/whisper/tags",
+        "https://github.com/openai/whisper",
+        "https://huggingface.co/openai/whisper-large-v3",
+        "https://arxiv.org/html/2212.04356v1"
+      ],
+      "channels": [
+        "github_releases",
+        "github_tags",
+        "model_card",
+        "paper"
+      ],
+      "cursor": null,
+      "last_run": null,
+      "last_checked_at": null,
+      "last_status": null
+    },
+    {
+      "id": "openaiaudio",
+      "project_id": "openaiaudio",
+      "name": "OpenAI gpt-realtime",
+      "kind": "competitor",
+      "urls": [
+        "https://openai.com/index/introducing-gpt-realtime/",
+        "https://developers.openai.com/api/docs/models/gpt-realtime"
+      ],
+      "channels": [
+        "competitor_announcement",
+        "competitor_documentation"
+      ],
+      "cursor": null,
+      "last_run": null,
+      "last_checked_at": null,
+      "last_status": null
+    }
+  ]
+}
