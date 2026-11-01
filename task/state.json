@@ -17,35 +17,35 @@
     "activation_status": "active",
     "confirmed_at": "2026-10-25T12:03:25Z"
   },
-  "last_run": "2026-10-25T12:14:47Z",
-  "last_entry_file": "digests/harvest-20261025T121447Z.html",
+  "last_run": "2026-11-01T05:05:25Z",
+  "last_entry_file": "digests/harvest-20261101T050525Z.html",
   "last_snapshot": "2026-10-25T12:09:15Z",
   "discovery": {
     "arxiv-speech": {
       "kind": "arxiv",
       "category": "Research",
       "query": "(cat:eess.AS OR cat:cs.CL) AND (all:speech OR all:\"audio codec\" OR all:\"voice conversion\")",
-      "cursor": "2026-10-25T12:14:47Z",
+      "cursor": "2026-11-01T05:05:25Z",
       "pending_since": null,
-      "last_checked_at": "2026-10-25T12:14:47Z",
+      "last_checked_at": "2026-11-01T05:05:25Z",
       "last_status": "ok"
     },
     "hf-asr": {
       "kind": "huggingface",
       "category": "ASR",
       "pipeline_tag": "automatic-speech-recognition",
-      "cursor": "2026-10-25T12:14:47Z",
+      "cursor": "2026-11-01T05:05:25Z",
       "pending_since": null,
-      "last_checked_at": "2026-10-25T12:14:47Z",
+      "last_checked_at": "2026-11-01T05:05:25Z",
       "last_status": "ok"
     },
     "hf-tts": {
       "kind": "huggingface",
       "category": "TTS",
       "pipeline_tag": "text-to-speech",
-      "cursor": "2026-10-25T12:14:47Z",
+      "cursor": "2026-11-01T05:05:25Z",
       "pending_since": null,
-      "last_checked_at": "2026-10-25T12:14:47Z",
+      "last_checked_at": "2026-11-01T05:05:25Z",
       "last_status": "ok"
     }
   }
